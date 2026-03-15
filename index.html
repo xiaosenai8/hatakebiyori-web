@@ -3,347 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>はたけ日和 - 家庭菜園をかんたん管理</title>
+  <title>はたけ日和</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=DM+Serif+Display&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    /* ===== CSS変数（テーマカラー） ===== */
-    :root {
-      --green-deep:   #2d5a27;
-      --green-mid:    #4a8c3f;
-      --green-light:  #7dba6f;
-      --green-pale:   #e8f5e4;
-      --earth:        #8b6914;
-      --earth-light:  #f5edd8;
-      --cream:        #fafaf6;
-      --text-main:    #1e2a1a;
-      --text-sub:     #5a6b55;
-      --border:       #d4e6cc;
-    }
-
-    /* ===== リセット・ベース ===== */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Noto Sans JP', sans-serif;
-      background: var(--cream);
-      color: var(--text-main);
-      line-height: 1.8;
-    }
-
-    /* ===== 言語切替ボタン ===== */
-    .lang-switcher {
-      position: fixed;
-      top: 16px; right: 20px;
-      z-index: 100;
-      display: flex;
-      gap: 6px;
-    }
-    .lang-btn {
-      padding: 5px 14px;
-      border-radius: 20px;
-      border: 1.5px solid var(--green-mid);
-      background: white;
-      color: var(--green-mid);
-      font-size: 0.78rem;
-      font-family: 'Noto Sans JP', sans-serif;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .lang-btn.active, .lang-btn:hover {
-      background: var(--green-mid);
-      color: white;
-    }
-
-    /* ===== ナビゲーション ===== */
-    nav {
-      position: sticky;
-      top: 0;
-      background: rgba(250,250,246,0.92);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--border);
-      z-index: 50;
-    }
-    .nav-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 14px 24px;
-      display: flex;
-      align-items: center;
-      gap: 32px;
-    }
-    .nav-logo {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.3rem;
-      color: var(--green-deep);
-      text-decoration: none;
-      letter-spacing: 0.03em;
-    }
-    .nav-links {
-      display: flex;
-      gap: 24px;
-      list-style: none;
-      margin-left: auto;
-    }
-    .nav-links a {
-      text-decoration: none;
-      color: var(--text-sub);
-      font-size: 0.9rem;
-      font-weight: 500;
-      padding-bottom: 2px;
-      border-bottom: 2px solid transparent;
-      transition: color 0.2s, border-color 0.2s;
-    }
-    .nav-links a:hover {
-      color: var(--green-mid);
-      border-bottom-color: var(--green-mid);
-    }
-
-    /* ===== ヒーローセクション ===== */
-    .hero {
-      background:
-        radial-gradient(ellipse at 20% 50%, rgba(125,186,111,0.18) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 20%, rgba(77,140,63,0.12) 0%, transparent 50%),
-        var(--cream);
-      padding: 90px 24px 80px;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-    }
-    .hero-icon {
-      width: 88px;
-      height: 88px;
-      background: linear-gradient(135deg, var(--green-mid), var(--green-deep));
-      border-radius: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 28px;
-      box-shadow: 0 8px 32px rgba(45,90,39,0.25);
-    }
-    .hero-icon svg {
-      width: 52px; height: 52px; fill: white;
-    }
-    .hero h1 {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(2.2rem, 5vw, 3.2rem);
-      color: var(--green-deep);
-      letter-spacing: 0.02em;
-      margin-bottom: 10px;
-    }
-    .hero-tagline {
-      font-family: 'Noto Serif JP', serif;
-      font-size: 1.05rem;
-      color: var(--text-sub);
-      margin-bottom: 36px;
-    }
-    .badge-row {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .badge {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 5px 16px;
-      font-size: 0.8rem;
-      color: var(--text-sub);
-    }
-
-    /* ===== セクション共通 ===== */
-    section {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 72px 24px;
-    }
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--green-mid);
-      margin-bottom: 8px;
-    }
-    .section-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
-      color: var(--green-deep);
-      margin-bottom: 40px;
-    }
-    hr.section-divider {
-      border: none;
-      border-top: 1px solid var(--border);
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    /* ===== 使い方：ステップカード ===== */
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 20px;
-    }
-    .step-card {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 28px 24px;
-      transition: box-shadow 0.2s, transform 0.2s;
-    }
-    .step-card:hover {
-      box-shadow: 0 6px 24px rgba(45,90,39,0.1);
-      transform: translateY(-2px);
-    }
-    .step-num {
-      width: 36px; height: 36px;
-      background: var(--green-pale);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'DM Serif Display', serif;
-      font-size: 1rem;
-      color: var(--green-deep);
-      margin-bottom: 14px;
-    }
-    .step-card h3 {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text-main);
-      margin-bottom: 8px;
-    }
-    .step-card p {
-      font-size: 0.9rem;
-      color: var(--text-sub);
-      line-height: 1.7;
-    }
-
-    /* スクリーンショットプレースホルダー */
-    .screenshot-note {
-      background: var(--green-pale);
-      border: 2px dashed var(--green-light);
-      border-radius: 16px;
-      padding: 32px;
-      text-align: center;
-      color: var(--text-sub);
-      font-size: 0.9rem;
-      margin-top: 36px;
-    }
-    .screenshot-note strong {
-      display: block;
-      font-size: 1rem;
-      color: var(--green-deep);
-      margin-bottom: 8px;
-    }
-
-    /* ===== Q&A ===== */
-    #qa { background: var(--earth-light); border-radius: 24px; }
-    .qa-list {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .qa-item {
-      background: white;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      overflow: hidden;
-    }
-    .qa-question {
-      width: 100%;
-      text-align: left;
-      background: none;
-      border: none;
-      padding: 20px 24px;
-      font-family: 'Noto Sans JP', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: var(--text-main);
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-    }
-    .qa-question::after {
-      content: '+';
-      font-size: 1.4rem;
-      color: var(--green-mid);
-      line-height: 1;
-      flex-shrink: 0;
-      transition: transform 0.25s;
-    }
-    .qa-item.open .qa-question::after {
-      transform: rotate(45deg);
-    }
-    .qa-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease, padding 0.3s;
-      font-size: 0.9rem;
-      color: var(--text-sub);
-      padding: 0 24px;
-    }
-    .qa-item.open .qa-answer {
-      max-height: 300px;
-      padding: 0 24px 20px;
-    }
-
-    /* ===== 問い合わせ ===== */
-    .contact-box {
-      background: linear-gradient(135deg, var(--green-deep), var(--green-mid));
-      border-radius: 24px;
-      padding: 56px 40px;
-      text-align: center;
-      color: white;
-    }
-    .contact-box .section-label { color: rgba(255,255,255,0.7); }
-    .contact-box .section-title { color: white; margin-bottom: 14px; }
-    .contact-box p {
-      font-size: 0.95rem;
-      opacity: 0.85;
-      margin-bottom: 32px;
-    }
-    .contact-btn {
-      display: inline-block;
-      background: white;
-      color: var(--green-deep);
-      font-family: 'Noto Sans JP', sans-serif;
-      font-weight: 600;
-      font-size: 0.95rem;
-      padding: 14px 40px;
-      border-radius: 50px;
-      text-decoration: none;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-    }
-    .contact-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-    }
-
-    /* ===== フッター ===== */
-    footer {
-      text-align: center;
-      padding: 40px 24px;
-      font-size: 0.82rem;
-      color: var(--text-sub);
-      border-top: 1px solid var(--border);
-    }
-
-    /* ===== 言語切替：非表示クラス ===== */
-    .ja, .en { transition: opacity 0.2s; }
-    body.lang-en .ja { display: none; }
-    body.lang-ja .en { display: none; }
-
-    /* ===== レスポンシブ ===== */
-    @media (max-width: 600px) {
-      .nav-links { gap: 16px; }
-      .nav-links a { font-size: 0.82rem; }
-      .contact-box { padding: 40px 24px; }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/style.css">
 </head>
 <body class="lang-ja">
 
@@ -356,7 +19,7 @@
   <!-- ナビゲーション -->
   <nav>
     <div class="nav-inner">
-      <a href="#" class="nav-logo">🌱 はたけ日和</a>
+      <a href="#" class="nav-logo">はたけ日和</a>
       <ul class="nav-links">
         <li><a href="#howto"><span class="ja">使い方</span><span class="en">How to Use</span></a></li>
         <li><a href="#qa"><span class="ja">Q&amp;A</span><span class="en">Q&amp;A</span></a></li>
@@ -368,43 +31,41 @@
   <!-- ヒーロー -->
   <div class="hero">
     <div class="hero-icon">
-      <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2-8 2C11 8 10 14 10 14l-1-2c-1-4 2-8 8-8Z"/></svg>
+      <img src="images/icon.png" alt="はたけ日和アイコン" loading="lazy">
     </div>
     <h1>はたけ日和</h1>
     <p class="hero-tagline ja">家庭菜園をかんたん管理。今日も畑へ。</p>
     <p class="hero-tagline en">Simple home garden journal for every sunny day.</p>
-    <div class="badge-row">
-      <span class="badge">📱 iOS</span>
-      <span class="badge ja">🇯🇵 日本語対応</span>
-      <span class="badge en">🇯🇵 Japanese App</span>
-      <span class="badge">🌿 無料</span>
-    </div>
+    <!-- ▼ App Store の URL に差し替えてください ▼ -->
+    <a href="#" class="appstore-btn" target="_blank" rel="noopener noreferrer">
+      <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+    </a>
   </div>
 
   <!-- 使い方 -->
   <section id="howto">
-    <p class="section-label ja">ガイド</p>
-    <p class="section-label en">Guide</p>
-    <h2 class="section-title ja">使い方</h2>
-    <h2 class="section-title en">How to Use</h2>
+    <p class="section-label ja">Features</p>
+    <p class="section-label en">Features</p>
+    <h2 class="section-title ja">機能紹介</h2>
+    <h2 class="section-title en">Features</h2>
 
     <div class="steps-grid">
       <div class="step-card">
-        <div class="step-num">1</div>
+        <div class="step-num">STEP 01</div>
         <h3 class="ja">作物を登録する</h3>
         <h3 class="en">Add a Crop</h3>
         <p class="ja">＋ボタンから育てたい作物を追加。アイコンとカラーを自由に選べます。</p>
         <p class="en">Tap the + button to add a crop. Choose your favorite icon and color.</p>
       </div>
       <div class="step-card">
-        <div class="step-num">2</div>
+        <div class="step-num">STEP 02</div>
         <h3 class="ja">記録をつける</h3>
         <h3 class="en">Log Your Garden</h3>
         <p class="ja">水やりや作業内容を記録して、育て方を振り返ることができます。</p>
         <p class="en">Record watering and tasks to track your gardening progress.</p>
       </div>
       <div class="step-card">
-        <div class="step-num">3</div>
+        <div class="step-num">STEP 03</div>
         <h3 class="ja">成長を見守る</h3>
         <h3 class="en">Watch It Grow</h3>
         <p class="ja">作物ごとの記録を一覧で確認。成長の様子を楽しんでください。</p>
@@ -482,29 +143,11 @@
 
   <!-- フッター -->
   <footer>
-    <p>© 2025 はたけ日和. All rights reserved.</p>
+    <p>© 2026 はたけ日和. All rights reserved.</p>
+    <p style="margin-top: 8px;"><a href="privacy.html" class="footer-link">プライバシーポリシー</a></p>
   </footer>
 
-  <script>
-    /* ===== 言語切替 ===== */
-    function setLang(lang) {
-      document.body.className = 'lang-' + lang;
-      document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.textContent.trim().toLowerCase().startsWith(lang === 'ja' ? '日' : 'en'));
-      });
-      document.documentElement.lang = lang === 'ja' ? 'ja' : 'en';
-    }
-
-    /* ===== Q&Aアコーディオン ===== */
-    function toggleQA(btn) {
-      const item = btn.closest('.qa-item');
-      // 同じカテゴリ（日/英）の他を閉じる
-      document.querySelectorAll('.qa-item').forEach(i => {
-        if (i !== item) i.classList.remove('open');
-      });
-      item.classList.toggle('open');
-    }
-  </script>
+  <script src="src/script.js"></script>
 
 </body>
 </html>
