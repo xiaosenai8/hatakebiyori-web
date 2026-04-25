@@ -12,6 +12,11 @@ https://hatakebiyori-web.xiaosenai8.workers.dev
 - CSS
 - JavaScript
 
+## ホスティング
+
+- Cloudflare Workers（Static Assets）
+- 設定ファイル: `wrangler.jsonc` / `.assetsignore`
+
 ## 素材・クレジット
 
 | ファイル | 説明 | 取得元 |
