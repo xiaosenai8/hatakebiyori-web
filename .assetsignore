@@ -1,0 +1,21 @@
+# Cloudflare Workers Static Assets にアップロードしないファイル
+# 参考: https://developers.cloudflare.com/workers/static-assets/binding/#ignoring-assets
+
+# Git・OS関連
+.git
+.gitignore
+.gitattributes
+.DS_Store
+
+# 開発環境関連
+.claude
+node_modules
+
+# Docker（ローカル確認用なので公開不要）
+Dockerfile
+docker-compose.yml
+
+# プロジェクトメタファイル
+README.md
+wrangler.jsonc
+.assetsignore
